@@ -1,0 +1,25 @@
+---
+layout: default
+title: "Synthèse — Outils numériques et traçabilité"
+parent: "Chapitre 2 — Outils numériques et traçabilité"
+grand_parent: "UE6.1_Methodes_TIC — Méthodes de travail et TIC"
+nav_order: 1
+---
+
+# 📄 Synthèse — Outils numériques et traçabilité
+
+## 🎯 Objectifs
+- …
+
+## 📥 Synthèse
+Résumé rédigé.
+
+## 🧠 Points clés
+- …
+
+## 📝 Schémas / cartes mentales
+![schéma](../../assets/placeholder.png)
+
+## 📚 Références
+- Notes de cours
+- Références bibliographiques
