@@ -1,0 +1,32 @@
+---
+layout: default
+title: "Situation clinique — Cadre juridique de la profession infirmière"
+parent: "Chapitre 1 — Cadre juridique de la profession infirmière"
+grand_parent: "UE1.3_Legislation — Législation, éthique et déontologie"
+nav_order: 1
+---
+
+# 🏥 Situation clinique — Cadre juridique de la profession infirmière
+
+## 🔎 1. Évaluation initiale
+- Anamnèse :
+- Signes cliniques :
+- Contexte :
+
+## 🎯 2. Problèmes / Diagnostics infirmiers
+- Diagnostic NANDA (si pertinent) :
+- Objectifs SMART :
+
+## 👁️ 3. Surveillance clinique
+- Paramètres à surveiller :
+
+## 💊 4. Soins et actions infirmières
+- Soins :
+- Actions éducatives :
+- Traçabilité :
+
+## ⚠️ 5. Complications à prévenir
+- …
+
+## 🗒️ 6. Transmission
+- Points à transmettre au relais :
