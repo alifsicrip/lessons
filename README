@@ -1,0 +1,144 @@
+# 📚 Lessons IFSI — Année 2025
+
+Site de documentation personnelle — synthèses, fiches et cartes mentales
+
+Ce dépôt contient l’intégralité du site **Lessons IFSI 2025**, construit avec **GitHub Pages + Just the Docs**.
+Il regroupe mes notes, fiches, cartes mentales et synthèses réalisées durant ma première année en soins infirmiers (2025).
+
+---
+
+## 🚀 Fonctionnement du site
+
+### ✔ Technologie utilisée
+
+* **GitHub Pages** (déploiement automatique)
+* **Jekyll** (générateur statique)
+* **Just the Docs** (thème : navigation, recherche, arborescence)
+* **Markdown** pour toutes les pages
+* **GitHub Actions** pour la compilation et le déploiement
+
+Le site est accessible ici :
+
+👉 **[https://alifsicrip.github.io/lessons/](https://alifsicrip.github.io/lessons/)**
+
+---
+
+## 📁 Arborescence générale du dépôt
+
+```
+lessons/
+│
+├── _config.yml              # Configuration du thème Just the Docs
+├── Gemfile                  # Dépendances Ruby/Jekyll
+├── index.md                 # Page d’accueil du site
+├── assets/
+│   └── placeholder.png      # Image par défaut pour cartes mentales
+│
+├── UE1/                     # UE1 – Sciences humaines et droit
+│   ├── UE1.1_...
+│   └── ...
+│
+├── UE2/                     # UE2 – Sciences biologiques et médicales
+│   └── ...
+│
+├── UE3/
+├── UE4/
+├── UE5/
+├── UE6/
+│
+└── .github/
+    └── workflows/
+        └── github-pages.yml # Workflow de build + déploiement
+```
+
+Chaque UE contient :
+
+* Ses sous-UE
+* Ses chapitres
+* 2 modèles de fiches :
+
+  * `fiche_synthese.md`
+  * `fiche_clinique.md`
+
+---
+
+## ✏️ Comment ajouter ou modifier une fiche ?
+
+1. Accède au dossier correspondant :
+   `UEX / Sous_UE / chapitreY /`
+2. Remplace ou édite les fichiers :
+
+   * `fiche_synthese.md`
+   * `fiche_clinique.md`
+3. Pour ajouter une **carte mentale**, dépose l’image dans `/assets/`
+4. Mets à jour le chemin de l’image dans :
+
+   ```
+   ![schéma](../../assets/nom_de_ton_image.png)
+   ```
+5. Enregistre → GitHub Pages reconstruit automatiquement le site en 1–2 minutes.
+
+---
+
+## 🔧 Modifier la structure ou les titres
+
+Les titres sont définis :
+
+* Dans les fichiers `index.md` de chaque dossier
+* Dans le front matter YAML (`title:`)
+
+Par exemple :
+
+```yaml
+---
+layout: default
+title: "Chapitre 1 — Processus inflammatoires"
+parent: "UE2.3 — Pathologie"
+---
+```
+
+Tu peux modifier les titres librement, Jekyll mettra automatiquement la navigation à jour.
+
+---
+
+## 🧠 Astuces pour rédiger de bonnes fiches
+
+* Utiliser des listes à puces
+* Ajouter des sections courtes
+* Mettre les mots clés en **gras**
+* Ajouter tes cartes mentales pour mémoriser plus vite
+* Utiliser une fiche clinique pour associer théorie + terrain
+
+---
+
+## 🛠️ Déploiement automatique
+
+Le fichier `.github/workflows/github-pages.yml` :
+
+* installe Jekyll
+* construit le site
+* déploie automatiquement sur GitHub Pages
+
+Aucune manipulation manuelle n’est nécessaire.
+
+---
+
+## 📌 Notes importantes
+
+* Ne supprime jamais le dossier `.github/workflows`
+* Ne renomme pas la branche principale `main`
+* Les images doivent rester dans le dossier `/assets/`
+* Tous les fichiers doivent être en **Markdown (.md)**
+
+---
+
+## 👩‍⚕️ Objectif du site
+
+Créer un espace clair, organisé et visuel :
+
+* Pour revoir rapidement les cours
+* Pour préparer les partiels
+* Pour structurer les connaissances
+* Pour apprendre plus efficacement avec les cartes mentales
+
+---
