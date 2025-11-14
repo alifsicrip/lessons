@@ -1,24 +1,8 @@
-title: "Documentation IFSI 1ʳᵉ année"
-description: "Synthèses, fiches et cartes mentales par UE - Étudiante IFSI 2025"
-theme: just-the-docs
-
-url: "https://alifsicrip.github.io"
-baseurl: "/lessons"
-
-nav_sort: case_sensitive
-
-aux_links:
-  "Voir sur GitHub":
-    - "https://github.com/alifsicrip/lessons"
-
-search_enabled: true
-
-collections:
-  ue1:
-    output: true
-    permalink: /ue1/:path/
-  ue2:
-    output: true
-    permalink: /ue2/:path/
-
-color_scheme: light
+title: "Lessons IFSI 2025"
+description: "Synthèses, fiches et cartes mentales de ma première année en soins infirmiers"
+remote_theme: just-the-docs/just-the-docs
+just_the_docs:
+  search_enabled: true
+plugins:
+  - jekyll-include-cache
+markdown: kramdown
