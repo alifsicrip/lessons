@@ -1,0 +1,32 @@
+---
+layout: default
+title: "Situation clinique — Éducation thérapeutique du patient"
+parent: "Chapitre 1 — Éducation thérapeutique du patient"
+grand_parent: "UE4.6_Education_prevention — Soins éducatifs et préventifs"
+nav_order: 1
+---
+
+# 🏥 Situation clinique — Éducation thérapeutique du patient
+
+## 🔎 1. Évaluation initiale
+- Anamnèse :
+- Signes cliniques :
+- Contexte :
+
+## 🎯 2. Problèmes / Diagnostics infirmiers
+- Diagnostic NANDA (si pertinent) :
+- Objectifs SMART :
+
+## 👁️ 3. Surveillance clinique
+- Paramètres à surveiller :
+
+## 💊 4. Soins et actions infirmières
+- Soins :
+- Actions éducatives :
+- Traçabilité :
+
+## ⚠️ 5. Complications à prévenir
+- …
+
+## 🗒️ 6. Transmission
+- Points à transmettre au relais :
