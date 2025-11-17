@@ -6,3 +6,9 @@ just_the_docs:
 plugins:
   - jekyll-include-cache
 markdown: kramdown
+exclude: []
+defaults:
+  - scope:
+      path: "" 
+      values:
+      published: true
