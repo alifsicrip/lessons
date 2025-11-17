@@ -1,3 +1,38 @@
+<!--
+Repository: https://github.com/alifsicrip/lessons
+Place the following files in the repository under the /docs folder (then enable GitHub Pages to serve from the docs/ folder of the main branch).
+
+Suggested directory tree (create these folders and add your files):
+
+/docs
+  /assets
+    /js
+    /css
+  /year1
+    /UE1
+      anatomie_carte_1.svg
+      physiologie.md
+      notes.pdf
+    /UE2
+      hygiene.md
+  /year2
+    /UE3
+      pharmacologie.md
+  /year3
+    /UE4
+      gériatrie.md
+  index.html   <-- this file (site shell)
+  README.md    <-- README content (see below)
+
+Notes:
+- Put your .html files and .svg files in the appropriate folders. GitHub Pages will serve them.
+- Markdown files (.md) will be fetched and rendered client-side by the site using a JS markdown renderer (no build step required).
+- PDFs and images are embedded directly with <iframe> and <img>.
+- .docx and .xls files will be linked for download (browsers can't reliably preview them natively).
+- To publish: in your repository settings enable Pages and choose Source: "main branch /docs folder" (or push to gh-pages as alternative).
+
+-->
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -6,6 +41,7 @@
   <title>Lessons IFSI — GitHub Pages (IFSI 2025)</title>
   <link rel="stylesheet" href="assets/css/styles.css">
   <style>
+    /* Minimal Notion/Obsidian-like aesthetic */
     :root{--bg:#f7f9fc;--card:#ffffff;--muted:#6b7280;--accent:#0b5fff}
     html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;background:var(--bg);color:#0b1220}
     .app{display:flex;min-height:100vh}
@@ -20,16 +56,19 @@
     .link{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;color:inherit;text-decoration:none}
     .link:hover{background:rgba(11,95,255,0.06)}
     .badge{font-size:12px;color:var(--muted);background:rgba(0,0,0,0.03);padding:4px 8px;border-radius:999px}
+
     main.viewer{flex:1;padding:28px;box-sizing:border-box}
     .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(12,15,30,0.04);max-width:1100px}
     .viewer-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
     .btn{padding:8px 10px;border-radius:8px;border:1px solid rgba(10,20,40,.06);background:white;cursor:pointer}
     .btn.primary{background:var(--accent);color:white;border:0}
-    iframe.viewer-frame{width:100%;height:72vh;border-radius:8px;border:1px solid rgba(0,0,0,.04);transform-origin:center center;transition: transform 0.2s;}
+    iframe.viewer-frame{width:100%;height:72vh;border-radius:8px;border:1px solid rgba(0,0,0,.04)}
     .md-content{max-width:900px}
     pre{background:#0b1220;color:#f7f9fc;padding:12px;border-radius:8px;overflow:auto}
     .ue-page{display:flex;flex-direction:column;gap:8px}
     .meta{font-size:13px;color:var(--muted)}
+
+    /* Responsive */
     @media (max-width:900px){nav.sidebar{display:none}main.viewer{padding:12px}}
   </style>
 </head>
@@ -64,10 +103,7 @@
           <div style="font-weight:700">Visualiseur</div>
           <div class="meta">&nbsp;— clique sur un fichier dans la barre latérale pour l'ouvrir</div>
           <div style="margin-left:auto;display:flex;gap:8px">
-            <button class="btn" id="zoomIn">🔍+</button>
-            <button class="btn" id="zoomOut">🔍-</button>
-            <button class="btn" id="rotateBtn">↻</button>
-            <button class="btn" id="openNewTab">⧉</button>
+            <button class="btn" id="toggleTheme">Thème</button>
             <button class="btn" id="downloadBtn" style="display:none">Télécharger</button>
           </div>
         </div>
@@ -81,28 +117,248 @@
     </main>
   </div>
 
+  <!-- Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    let scale = 1; let rotation = 0;
-    let currentFileUrl = '';
-    const viewerFrame = document.querySelector('iframe.viewer-frame');
 
-    function applyTransform(){
-      if(viewerFrame){
-        viewerFrame.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
+  <script>
+    // Configuration — change repo/user if needed
+    const GITHUB_USER = 'alifsicrip';
+    const GITHUB_REPO = 'lessons';
+    const GITHUB_PATH = 'docs';
+    const API_BASE = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_PATH}`;
+
+    // Utilities
+    function ext(path){return path.split('.').pop().toLowerCase();}
+
+    // Fetch contents of a GitHub folder
+    async function listFolder(apiUrl){
+      try{
+        const resp = await fetch(apiUrl);
+        if(!resp.ok) throw new Error('Échec API GitHub');
+        return await resp.json();
+      }catch(e){console.error(e);return null}
+    }
+
+    // Recursively build tree for year1/year2/year3 and other folders
+    async function buildTree(){
+      const root = document.getElementById('tree');
+      const menu = document.createElement('div');
+      menu.id = 'menu';
+
+      const data = await listFolder(API_BASE);
+      const search = document.getElementById('searchInp');
+
+      if(!data){
+        document.getElementById('menuPlaceholder').innerHTML = '<p style="color:crimson">Impossible de lire le dépôt. Vérifie que le dépôt est public et que le dossier docs/ existe.</p>';
+        return;
+      }
+
+      // group folders by year if present
+      const years = {};
+      data.forEach(item=>{
+        if(item.type === 'dir'){
+          const key = item.name.toLowerCase();
+          years[item.name] = item;
+        }
+      });
+
+      // If there are year folders use them, otherwise list files
+      if(Object.keys(years).length){
+        Object.keys(years).sort().forEach(async(yearName)=>{
+          const entry = document.createElement('div');
+          const h = document.createElement('h4'); h.textContent = yearName.replace(/year/i, 'Année ');
+          entry.appendChild(h);
+
+          const ul = document.createElement('ul');
+          ul.style.paddingLeft='8px';
+
+          const folderData = await listFolder(years[yearName].url);
+          if(folderData){
+            // for each UE folder inside year
+            for(const it of folderData){
+              if(it.type==='dir'){
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = '#'; a.className='link';
+                a.innerHTML = `<strong>${it.name}</strong>`;
+                a.onclick = async function(e){
+                  e.preventDefault();
+                  // list files inside UE and show submenu
+                  const sub = await listFolder(it.url);
+                  showUEMenu(it.name, sub, years[yearName].name);
+                };
+                li.appendChild(a);
+                ul.appendChild(li);
+              } else if(it.type==='file'){
+                const li = document.createElement('li');
+                const a = makeFileLink(it);
+                li.appendChild(a);
+                ul.appendChild(li);
+              }
+            }
+          }
+
+          entry.appendChild(ul);
+          menu.appendChild(entry);
+        });
+      } else {
+        // fallback: list files at root
+        const ul = document.createElement('ul');
+        data.forEach(it=>{if(it.type==='file'){const li=document.createElement('li');li.appendChild(makeFileLink(it));ul.appendChild(li)}});
+        menu.appendChild(ul);
+      }
+
+      document.getElementById('menuPlaceholder').innerHTML='';
+      document.getElementById('menuPlaceholder').appendChild(menu);
+
+      // search
+      search.addEventListener('input', ()=>{
+        const q = search.value.trim().toLowerCase();
+        filterMenu(q);
+      });
+
+    }
+
+    function makeFileLink(item){
+      const a = document.createElement('a');
+      a.href = '#'; a.className='link';
+      a.textContent = item.name;
+      a.onclick = function(e){e.preventDefault(); openFile(item.path);};
+      return a;
+    }
+
+    // Show submenu for a UE folder
+    function showUEMenu(ueName, files, yearName){
+      // collapse other submenus
+      const existing = document.querySelectorAll('.ue-submenu'); existing.forEach(n=>n.remove());
+      const container = document.createElement('div'); container.className='ue-submenu'; container.style.paddingLeft='12px';
+      const list = document.createElement('ul'); list.style.listStyle='none'; list.style.paddingLeft='6px';
+      files.forEach(f=>{
+        const li = document.createElement('li'); li.style.margin='6px 0';
+        if(f.type==='file'){
+          const a = document.createElement('a'); a.href='#'; a.className='link'; a.textContent = f.name;
+          a.onclick = function(e){e.preventDefault(); openFile(f.path);}
+          li.appendChild(a);
+        } else if(f.type==='dir'){
+          const a = document.createElement('a'); a.href='#'; a.className='link'; a.textContent = f.name;
+          a.onclick = async function(e){e.preventDefault(); const sub = await listFolder(f.url); showUEMenu(f.name, sub, yearName);}
+          li.appendChild(a);
+        }
+        list.appendChild(li);
+      });
+      container.appendChild(list);
+      // append below the clicked UE (find the matching link)
+      const links = Array.from(document.querySelectorAll('.link'));
+      const match = links.find(l=>l.textContent.trim()===ueName);
+      if(match){ match.parentNode.insertBefore(container, match.nextSibling); }
+    }
+
+    // Filter menu by search
+    function filterMenu(q){
+      const all = document.querySelectorAll('#menu .link');
+      all.forEach(a=>{
+        const txt = a.textContent.toLowerCase();
+        a.style.display = txt.includes(q) ? 'flex' : 'none';
+      });
+    }
+
+    // Open a file (path relative to repo docs)
+    async function openFile(path){
+      const extn = ext(path);
+      const contentDiv = document.getElementById('content');
+      const downloadBtn = document.getElementById('downloadBtn');
+      downloadBtn.style.display='none';
+
+      // construct raw.githubusercontent URL for docs files
+      const raw = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${path}`;
+      const fileUrl = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${path}`;
+      const publicUrl = `https://alifsicrip.github.io/lessons/${path.replace('docs/','')}`; // when served via pages
+
+      contentDiv.innerHTML = '<div class="meta">Chargement...</div>';
+
+      if(extn==='md'){
+        try{
+          const r = await fetch(raw);
+          if(!r.ok) throw new Error('not found');
+          const txt = await r.text();
+          contentDiv.innerHTML = `<div class="ue-page"><div style="display:flex;justify-content:space-between;align-items:center"><div><h2>${path.split('/').pop()}</h2><div class="meta">${path}</div></div><div></div></div><div class="md-content">${marked.parse(txt)}</div></div>`;
+          downloadBtn.style.display='inline-block';
+          downloadBtn.onclick = ()=>{window.open(publicUrl,'_blank')};
+        }catch(e){ contentDiv.innerHTML = '<p style="color:crimson">Impossible de charger le Markdown.</p>' }
+      } else if(extn==='html'){
+        contentDiv.innerHTML = `<iframe class="viewer-frame" src="${publicUrl}" sandbox="allow-same-origin allow-scripts allow-forms"></iframe>`;
+      } else if(extn==='pdf'){
+        contentDiv.innerHTML = `<iframe class="viewer-frame" src="${publicUrl}"></iframe>`;
+      } else if(['png','jpg','jpeg','svg','gif'].includes(extn)){
+        if(extn==='svg'){
+          contentDiv.innerHTML = `<object type="image/svg+xml" data="${publicUrl}" style="width:100%;height:72vh"></object>`;
+        } else {
+          contentDiv.innerHTML = `<img src="${publicUrl}" style="max-width:100%;height:auto;border-radius:8px;">`;
+        }
+      } else if(['docx','xls','xlsx'].includes(extn)){
+        contentDiv.innerHTML = `<p>Fichier non previewable dans le navigateur. <a href="${publicUrl}" target="_blank">Télécharger</a></p>`;
+      } else {
+        contentDiv.innerHTML = `<p>Type non pris en charge. <a href="${publicUrl}" target="_blank">Ouvrir</a></p>`;
       }
     }
 
-    document.getElementById('zoomIn').addEventListener('click', ()=>{scale +=0.1; applyTransform();});
-    document.getElementById('zoomOut').addEventListener('click', ()=>{scale -=0.1; if(scale<0.1) scale=0.1; applyTransform();});
-    document.getElementById('rotateBtn').addEventListener('click', ()=>{rotation+=90; applyTransform();});
-    document.getElementById('openNewTab').addEventListener('click', ()=>{ if(currentFileUrl) window.open(currentFileUrl,'_blank'); });
+    // New UE template modal (shows content to copy/paste)
+    document.getElementById('newUE').addEventListener('click', ()=>{
+      const template = `# Titre UE
 
-    function openFile(url){
-      currentFileUrl = url;
-      viewerFrame.src = url;
-      scale = 1; rotation = 0; applyTransform();
-    }
+## Objectifs
+-
+
+## Contenu
+-
+
+## Cartes mentales
+- Carte 1: 
+
+## Ressources
+- PDF: 
+`;
+      const contentDiv = document.getElementById('content');
+      contentDiv.innerHTML = `<div><h3>Nouvelle page UE — Modèle</h3><p>Copie ce contenu et crée un fichier <code>docs/yearX/UEY/nom.md</code> dans ton dépôt via GitHub ou en local.</p><pre>${template}</pre></div>`;
+    });
+
+    // Refresh
+    document.getElementById('refreshBtn').addEventListener('click', ()=>{document.getElementById('menuPlaceholder').innerHTML='<p style="color:var(--muted)">Rafraîchissement...</p>';buildTree();});
+
+    // Initial load
+    buildTree();
+
   </script>
+
+  <!-- README template (place as /docs/README.md) -->
+  <!--
+  # README — Lessons IFSI (2025)
+
+  Ce dépôt contient les synthèses et cartes mentales organisées par année (year1, year2, year3) destinées à être publiées via GitHub Pages.
+
+  ## Structure recommandée
+  docs/
+    assets/
+      css/
+      js/
+    year1/
+      UE1/
+        cours.md
+        carte.svg
+        notes.pdf
+    year2/
+    year3/
+    index.html
+    README.md
+
+  ## Publication
+  1. Placez les fichiers dans `docs/`.
+  2. Activez GitHub Pages : Settings → Pages → Branch: main → Folder: /docs.
+  3. Le site sera disponible à : `https://alifsicrip.github.io/lessons/`.
+
+  ## Créer une page UE
+  - Utilisez le modèle fourni dans l'interface (bouton "+ Nouvelle page UE") puis copiez-le dans un fichier `.md` dans `docs/yearX/UEY/`.
+
+  -->
 </body>
 </html>
