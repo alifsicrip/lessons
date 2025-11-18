@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFSI CRIP - Anais Logerais 2025</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <h1>📚 IFSI CRIP</h1>
+                    <p class="subtitle">Anais Logerais - 2025</p>
+                </div>
+                <button class="toggle-btn" id="toggleSidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Rechercher...">
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="nav-menu" id="navMenu">
+                <div class="nav-section">
+                    <button class="nav-item active" onclick="loadContent('accueil')">
+                        <i class="fas fa-home"></i>
+                        <span>Accueil</span>
+                    </button>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">📖 Sciences Humaines, Sociales et Droit</div>
+                    <button class="nav-item" onclick="loadContent('ue1-1')">
+                        <i class="fas fa-user-friends"></i>
+                        <span>UE 1.1 - Psychologie, Sociologie, Anthropologie</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue1-2')">
+                        <i class="fas fa-balance-scale"></i>
+                        <span>UE 1.2 - Santé publique et Économie de la santé</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue1-3')">
+                        <i class="fas fa-gavel"></i>
+                        <span>UE 1.3 - Législation, Éthique, Déontologie</span>
+                    </button>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">🔬 Sciences Biologiques et Médicales</div>
+                    <button class="nav-item" onclick="loadContent('ue2-1')">
+                        <i class="fas fa-dna"></i>
+                        <span>UE 2.1 - Biologie fondamentale</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue2-2')">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>UE 2.2 - Cycles de la vie et grandes fonctions</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue2-3')">
+                        <i class="fas fa-virus"></i>
+                        <span>UE 2.3 - Santé, maladie, handicap, accidents</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue2-4')">
+                        <i class="fas fa-procedures"></i>
+                        <span>UE 2.4 - Processus traumatiques</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue2-5')">
+                        <i class="fas fa-user-injured"></i>
+                        <span>UE 2.5 - Processus inflammatoires et infectieux</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue2-6')">
+                        <i class="fas fa-skull"></i>
+                        <span>UE 2.6 - Processus dégénératifs et défaillances organiques</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue2-7')">
+                        <i class="fas fa-brain"></i>
+                        <span>UE 2.7 - Défaillances organiques et processus dégénératifs</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue2-8')">
+                        <i class="fas fa-child"></i>
+                        <span>UE 2.8 - Processus obstructifs</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue2-9')">
+                        <i class="fas fa-head-side-virus"></i>
+                        <span>UE 2.9 - Processus tumoraux</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue2-10')">
+                        <i class="fas fa-disease"></i>
+                        <span>UE 2.10 - Infectiologie, Hygiène</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue2-11')">
+                        <i class="fas fa-pills"></i>
+                        <span>UE 2.11 - Pharmacologie et Thérapeutiques</span>
+                    </button>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">💉 Sciences et Techniques Infirmières</div>
+                    <button class="nav-item" onclick="loadContent('ue3-1')">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>UE 3.1 - Raisonnement et démarche clinique</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue3-2')">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>UE 3.2 - Projet de soins infirmiers</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue3-3')">
+                        <i class="fas fa-user-nurse"></i>
+                        <span>UE 3.3 - Rôles infirmiers, organisation</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue3-4')">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>UE 3.4 - Initiation à la démarche de recherche</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue3-5')">
+                        <i class="fas fa-stethoscope"></i>
+                        <span>UE 3.5 - Encadrement des professionnels de soins</span>
+                    </button>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">🩺 Méthodes et Techniques</div>
+                    <button class="nav-item" onclick="loadContent('ue4-1')">
+                        <i class="fas fa-syringe"></i>
+                        <span>UE 4.1 - Soins de confort et bien-être</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue4-2')">
+                        <i class="fas fa-band-aid"></i>
+                        <span>UE 4.2 - Soins relationnels</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue4-3')">
+                        <i class="fas fa-medkit"></i>
+                        <span>UE 4.3 - Soins d'urgence</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue4-4')">
+                        <i class="fas fa-hand-holding-medical"></i>
+                        <span>UE 4.4 - Thérapeutiques et contribution au diagnostic</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue4-5')">
+                        <i class="fas fa-ambulance"></i>
+                        <span>UE 4.5 - Soins infirmiers et gestion des risques</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue4-6')">
+                        <i class="fas fa-crutch"></i>
+                        <span>UE 4.6 - Soins éducatifs et préventifs</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue4-7')">
+                        <i class="fas fa-hospital"></i>
+                        <span>UE 4.7 - Soins palliatifs et fin de vie</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue4-8')">
+                        <i class="fas fa-user-md"></i>
+                        <span>UE 4.8 - Qualité des soins, évaluation des pratiques</span>
+                    </button>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">🏥 Intégration des Savoirs et Posture Professionnelle</div>
+                    <button class="nav-item" onclick="loadContent('ue5-1')">
+                        <i class="fas fa-hands-helping"></i>
+                        <span>UE 5.1 - Accompagnement de la personne</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue5-2')">
+                        <i class="fas fa-comments"></i>
+                        <span>UE 5.2 - Communication et conduite de projet</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue5-3')">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>UE 5.3 - Information et traitement</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue5-4')">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>UE 5.4 - Analyse de pratiques professionnelles</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue5-5')">
+                        <i class="fas fa-file-signature"></i>
+                        <span>UE 5.5 - Mise en œuvre des thérapeutiques</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue5-6')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>UE 5.6 - Analyse de la qualité</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue5-7')">
+                        <i class="fas fa-briefcase-medical"></i>
+                        <span>UE 5.7 - Optionnelle</span>
+                    </button>
+                    <button class="nav-item" onclick="loadContent('ue5-8')">
+                        <i class="fas fa-book-medical"></i>
+                        <span>UE 5.8 - Stage et Travaux</span>
+                    </button>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">⚙️ Outils</div>
+                    <button class="nav-item" onclick="loadContent('ressources')">
+                        <i class="fas fa-folder-open"></i>
+                        <span>Ressources</span>
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-header">
+                <div class="breadcrumb" id="breadcrumb">
+                    <i class="fas fa-home"></i> Accueil
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" onclick="zoomOut()" title="Zoom arrière">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
+                    <button class="icon-btn" onclick="resetZoom()" title="Zoom par défaut">
+                        <i class="fas fa-compress"></i>
+                    </button>
+                    <button class="icon-btn" onclick="zoomIn()" title="Zoom avant">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-body" id="contentBody">
+                <!-- Content will be loaded here -->
+                <div class="welcome-screen">
+                    <div class="welcome-header">
+                        <h1>🎓 Bienvenue sur votre espace IFSI</h1>
+                        <p class="welcome-subtitle">Formation en soins infirmiers - Promotion 2025</p>
+                    </div>
+                    
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <div class="info-card-icon">📚</div>
+                            <h3>Organisation</h3>
+                            <p>Tous vos cours organisés par Unités d'Enseignement</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon">🔍</div>
+                            <h3>Recherche</h3>
+                            <p>Trouvez rapidement vos documents avec la barre de recherche</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon">📱</div>
+                            <h3>Responsive</h3>
+                            <p>Accédez à vos cours depuis n'importe quel appareil</p>
+                        </div>
+                    </div>
+
+                    <div class="quick-start">
+                        <h2>🚀 Démarrage rapide</h2>
+                        <ol>
+                            <li>Utilisez le menu latéral pour naviguer entre les UE</li>
+                            <li>Cliquez sur une UE pour voir son contenu</li>
+                            <li>Utilisez la recherche pour trouver rapidement un document</li>
+                            <li>Utilisez les outils de zoom pour ajuster l'affichage</li>
+                        </ol>
+                    </div>
+
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <div class="stat-number">6</div>
+                            <div class="stat-label">Catégories d'UE</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">40+</div>
+                            <div class="stat-label">Unités d'Enseignement</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">180</div>
+                            <div class="stat-label">ECTS</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
