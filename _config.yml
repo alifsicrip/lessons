@@ -1,0 +1,70 @@
+# Configuration GitHub Pages pour IFSI CRIP
+# Site IFSI - Anais Logerais 2025
+
+# Informations du site
+title: IFSI CRIP - Anais Logerais 2025
+description: Plateforme de cours et ressources pour la formation en soins infirmiers
+author: Anais Logerais
+email: anais.logerais@ifsi-crip.fr
+
+# URL configuration
+url: "https://alifsicrip.github.io"
+baseurl: "/lessons"
+
+# Build settings
+markdown: kramdown
+theme: null
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclusions
+exclude:
+  - README.md
+  - GUIDE_UTILISATION.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - .gitignore
+  - LICENSE
+
+# Collections (pour futures extensions)
+collections:
+  ue:
+    output: true
+    permalink: /:collection/:name
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "ue"
+    values:
+      layout: "ue"
+
+# Navigation
+navigation:
+  - title: Accueil
+    url: /
+  - title: UE
+    url: /ue/
+  - title: Ressources
+    url: /ressources/
+
+# Social (optionnel)
+social:
+  github: alifsicrip/lessons
+
+# SEO
+lang: fr
+locale: fr_FR
+
+# Analytics (optionnel - à configurer si nécessaire)
+# google_analytics: UA-XXXXXXXXX-X
+
+# Timezone
+timezone: Europe/Paris
