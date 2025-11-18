@@ -1,0 +1,97 @@
+# IFSI CRIP - Git Ignore File
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Node modules (si utilisation future)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.cache
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Large files (documents à ne pas versionner)
+# Décommenter si nécessaire
+# *.pdf
+# *.docx
+# *.pptx
+# *.xlsx
+
+# Compressed files
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+
+# Personal notes (à adapter selon besoins)
+NOTES.md
+TODO.md
+PRIVATE/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Package manager files
+package-lock.json
+yarn.lock
+
+# Ruby (Jekyll)
+Gemfile.lock
+.bundle/
+vendor/
+
+# Python (si scripts futurs)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# Sensitive data
+config.local.yml
+secrets.yml
+
+# Test files
+test/
+tests/
+*.test.js
